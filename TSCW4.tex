@@ -1,0 +1,69 @@
+\documentclass[a5paper,10pt]{article}
+
+\usepackage{amsmath}
+\usepackage{mathtools, cancel}
+
+\usepackage{xepersian}
+\usepackage{fontspec}
+\settextfont{B Mitra}
+\setlatintextfont[Scale=1]{TeX Gyre Termes}
+\usepackage{fullpage}
+\usepackage{setspace}
+\doublespacing
+
+\author{پوریا عصاره ها}
+\title{
+    تمرین کلاسی 23 آبان\\
+    سری زمانی ۱ \\
+    دکتر افتخاری
+}
+\date{\today}
+\begin{document}
+\maketitle
+
+\section{شکل خطی عمومی آریما یک یک یک }
+$\nabla Y_t = W_t$ یک فرایند آرما یک یک است.
+بنا بر معادله ۴.۴.۶ کتاب می توانیم بنویسیم:
+\[ \Psi_j = (\phi - \theta) \phi^{j-1} \qquad j \ge 1 \]
+\[ W_t = Y_t - Y_{t-1} = \Psi_0 e_t + \Psi_1 e_{t-1} + \dots\ + \Psi_j e_0 - \phi_0 e_{t-1} - \Psi_1 e_{t-2} - \dots\ - \Psi_{j-1}e_0 \]
+\begin{align*}
+    Y_0 & = e_0 \\
+    Y_1 & = \phi e_0 + e_1 + \theta e_0 \\
+        & = (\phi + \theta) e_0 + e_1 \\
+    Y_2 & = \phi^2 e_0 + \phi e_1 + \phi\theta e_0 + e_2 + \theta e_1  \\
+        & = (\phi^2 + \phi\theta)e_0 + (\phi + \theta)e_1 + e_2 \\
+    Y_3 & = \phi^3 e_0 + \phi^2 e_1 + \phi^2\theta e_0 + \phi e_2 + \phi \theta e_1 + e_3 + \theta e_2 \\
+        & = (\phi^3 + \phi^2\theta )e_0 + (\phi^2 + \phi \theta)e_1 + (\phi + \theta)e_2 + e_3 \\
+    \Rightarrow & Y_t = \sum_{j=0}^t \psi_j e_{t-j} = \psi_0 e_t + \psi_1 e_{t-1} + \dots\ + \psi_t e_0 \\
+    \psi_0 & = 1  \\ 
+    \psi_1 & = \phi - \theta \\
+    \psi_2 & = \phi^2 - \phi \theta \\
+    \psi_3 & = \phi^3 - \phi^2 \theta \\
+    \vdots \\
+    \psi_t & = \phi^t - \phi^{t-1} \theta = \phi^t(1-\frac{\theta}{\phi})
+\end{align*}
+$\phi > 1$ 
+و واریانس نامحدود میشود.
+\newpage
+\section{ایما  دو یک با عرض از مبدا }
+
+\[ W_t = \nabla^2 Y_t = Y_t - 2Y_{t-1} + Y_{t-2} \sim MA(2) \]
+
+\begin{multline*}
+    Y_t - 2Y_{t-1} + Y_{t-2} =  e_t - \theta e_{t-1} + \mu\\
+    \Rightarrow Y_t = \mu + 2Y_{t-1} - Y_{t-2} + e_t - \theta e_{t-1} 
+\end{multline*}
+
+بدلیل وجود ضرایب اتو رگرسیو بزرگتر مساوی یک برای مدل $Y_t$ می دانیم که میانگین سری بصورت انفجاری رشد می کند.
+\[ E[Y_t] = \mu + 2E[Y_{t-1}] -E[Y_{t-2}]   \]
+ اما میانگین سری های تفاضلی $W_t = \nabla Y_t$
+\[ E[Y_t - Y_{t-1}] = \mu + E[Y_{t-1}] - E[Y_{t-2}] \quad\Rightarrow\quad E[W_t] = \mu + E[W_{t-1}] \]
+
+یعنی هنوز میانگین سری انفجاری است. اما برای تفاصل آن
+$ E[\nabla W_t] = \mu $
+
+بنابرین میانگین سری $\nabla W_t$ یا $\nabla^2 Y_t$
+ثابت و غیر صفر می شود.  
+
+اما اگر عرض از مبدا نداشتیم،‌میانگین سری انفجاری نمی شود و همچنان امید $Y_t$ صفر می ماند اما واریانس سری نامحدود می شود.
+\end{document}

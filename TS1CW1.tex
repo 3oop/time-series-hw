@@ -1,0 +1,208 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{xepersian}
+\usepackage{fontspec}
+\settextfont[Scale=1]{B Mitra}
+\setlatintextfont[Scale=1]{Times New Roman}
+\usepackage{fullpage}
+% font for linux 
+% \setlatintextfont[Scale=1]{TeX Gyre Termes}
+
+\title{معادله مشحصه سری اتورگرسیو مرتبه ۳}
+\author{پوریا عصاره‌ها}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{\lr{AR(3)} معادله مشخصه}
+
+\begin{equation}
+    Y_t = \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \phi_3 Y_{t-3} + e_t 
+\end{equation} 
+
+$Y_t$ را اینگونه به صورت برداری تعریف می کنیم.
+\[
+    Y_t = \left[ \begin{matrix}
+        Y_{t+2} \\ Y_{t+1} \\ Y_{t}
+    \end{matrix}  \right] \qquad , \qquad 
+    e_t = \left[ \begin{matrix}
+        e_{t+2} \\ 0 \\ 0 
+    \end{matrix} \right] 
+\]
+
+آنگاه
+\[ Y_1 = A Y_0 + e_1 \quad \Rightarrow \quad \left[ \begin{matrix}
+    Y_{3} \\ Y_{2} \\ Y_{1}
+\end{matrix} \right]  = A \left[ \begin{matrix}
+    Y_{2} \\ Y_{1} \\ Y_{0}
+\end{matrix} \right] + \left[ \begin{matrix}
+    e_{3} \\ 0 \\ 0 
+\end{matrix} \right]\]
+و
+\[ 
+    Y_{t+1} = A^t Y_0 + \sum_i=0^t A^{t-i} e_i  
+\]
+بر اساس رابطه 1 می‌توان ماتریس \lr{A} را پیدا کرد.
+
+\[ A = \left[ \begin{matrix}
+    \phi_1 & \phi_2 & \phi_3 \\
+    1      &    0   &   0    \\
+    0      &    1   &   0    \\
+\end{matrix} \right] \]
+
+از جبر خطی می‌دانیم می‌دانیم 
+\[ 
+    A^n = U D^n U^{-1}        
+\]
+
+که \lr{D} ماتریس قطری مقادیر ویژه و \lr{U} ماتریس بردارهای ویژه است.
+
+برای اینکه شرط مانایی بر قرار باشد، اندازه $A^t$ وقتی $t$ به بی نهایت میل می‌کند باید محدود باشد.
+
+یعنی
+\[
+    t \rightarrow \infty \; : \; UD^tU^{-1} < \infty \quad \Rightarrow \quad \lambda^t < \infty
+\]
+
+$\lambda$ها مقادیر ویژه ماتریس
+\lr{A} هستند.
+
+\[ \lim_{t\rightarrow \infty} \lambda^t < \infty \quad \Rightarrow \quad | \lambda | < 0 \]
+
+لامداها با حل این معادله بدست می‌آیند
+\begin{equation}
+    |A - \lambda I | = 0 
+\Rightarrow \Bigg| \begin{matrix}
+    \phi_1 -\lambda & \phi_2 & \phi_3 \\
+    1      &    -\lambda   &   0    \\
+    0      &    1   &   -\lambda    \\
+\end{matrix} \Bigg| = -\lambda^3 +\lambda^2 \phi_1 + \lambda \phi_2 + \phi_3 = 0
+\end{equation}
+
+با تغییر متغییر $x = \frac{1}{\lambda} $ و $ |x| > 1 $ 
+معادله را ساده‌تر کرد. از آنجایی که $x \neq 0 $
+$-x^3$ را در رابطه 2 ضرب می‌کنیم.
+
+\[
+    x^3\lambda^3 -x^3\lambda^2 \phi_1 - x^3\lambda \phi_2 - x^3\phi_3 = 0 \]
+\begin{equation}
+    1 - x \phi_1 - x^2 \phi_2 - \phi_3 x^3 = 0
+\end{equation}
+
+حالا شرط مانایی این خواهد بود که قدرمطلق ریشه‌های $x$ 
+بزرگ تر از 1 باشند.
+
+\section{تابع خودکواریانس}
+
+\[ \gamma_k = Cov(Y_t, Y_{t-k}) = Cov(\phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \phi_3 Y_{t-3} + e_t , Y_{t-k})\]
+\begin{equation}
+    \gamma_k = \phi_1 Cov(Y_{t-1}, Y_{t-k}) + \phi_2 Cov(Y_{t-2}, Y_{t-k}) + \phi_3 Cov(Y_{t-3}, Y_{t-k}) + Cov(e_t , Y_{t-k})
+\end{equation}
+
+$k = 0$
+\[ \gamma_0 = \phi_1 \gamma_1 + \phi_2 \gamma_2 + \phi_3 \gamma_3 \] 
+یا به صورت مستقیم
+\begin{align*}
+    & \gamma_0 = Cov(Y_t, Y_t) = Var(Y_t) \\ 
+    = & Var(\phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \phi_3 Y_{t-3} + e_t) \\
+    = & \sigma^2 + \phi_1^2 Var(Y_{t-1}) + \phi_2^2 Var(Y_{t-2}) + \phi_3^2 Var(Y_{t-3}) \\
+    + & \phi_1\phi_2Cov(Y_{t-1}, Y_{t-2}) + \phi_2\phi_3Cov(Y_{t-2}, Y_{t-3}) + \phi_1\phi_3Cov(Y_{t-1}, Y_{t-3}) \\ 
+    = & \sigma^2 + \phi_1^2\gamma_0 + \phi_2^2\gamma_0 + \phi_3^2\gamma_0 + \phi_1\phi_2\gamma_1 + \phi_2\phi_3\gamma_1 + \phi_1\phi_3\gamma_2 \\
+    \Rightarrow & \gamma_0 = \frac{\sigma^2 + \phi_1\phi_2\gamma_1 + \phi_2\phi_3\gamma_1 + \phi_1\phi_3\gamma_2}{1 - \phi_1^2 - \phi_2^2 - \phi_3^2 }
+\end{align*}
+
+
+\[ \gamma_k = \phi_1\gamma_{k-1} + \phi_2\gamma_{k-2} + \phi_3\gamma_{k-3} \]
+
+% $k = 1$
+
+% \begin{align*}
+%     & \gamma_1 = \phi_1 Cov(Y_{t-1}, Y_{t-1}) + \phi_2 Cov(Y_{t-2}, Y_{t-1}) + \phi_3 Cov(Y_{t-3}, Y_{t-1}) + Cov(e_t , Y_{t-1}) \\
+%     & = \phi_1\gamma_0 + \phi_2\gamma_1 + \phi_3\gamma_2 + 0 \quad (*)\\ 
+%     & \gamma_2 =  Cov(Y_{t-3}, Y_{t-1}) = \phi_1 Cov(Y_{t-3}, Y_{t-2}) + \phi_2 Cov(Y_{t-3}, Y_{t-3}) + \phi_3 Cov(Y_{t-3}, Y_{t-4}) + Cov(Y_{t-3} , e_{t-1} ) \\
+%     & \gamma_2 = \phi_1\gamma_1 + \phi_2\gamma_0 + \phi_3\gamma_1 + 0 \quad (**) \\
+%     & (*) , (**) \Rightarrow \quad \gamma_1 = \phi_1\gamma_0 + \phi_2\gamma_1 + \phi_3 \left( \phi_1\gamma_1 + \phi_2\gamma_0 + \phi_3\gamma_1  \right) \\
+%     & \gamma_1 (1 - \phi_2) = \phi_1\gamma_0 + \phi_3 \phi_2 \gamma_0 + \gamma_1 \phi_3^2 + \gamma_1 \phi_3\phi_1  \\
+%     & \gamma_1 = \frac{\left( \phi_1+ \phi_3 \phi_2 \right) \left( \frac{\sigma^2}{1 - \phi_1^2 - \phi_2^2 - \phi_3^2 }\right)}{1 - \phi_2 -  \phi_3 (\phi_1 + \phi_3)}
+% \end{align*}
+
+% $k = 2$ بر اساس $(**)$ و $(*)$
+
+% \begin{align*}
+%     \gamma_2 = \phi_1 \frac{\left( \phi_1+ \phi_3 \phi_2 \right) \left( \frac{\sigma^2}{1 - \phi_1^2 - \phi_2^2 - \phi_3^2 }\right)}{1 - \phi_2 -  \phi_3 (\phi_1 + \phi_3)}
+%     + \phi_2 \frac{\sigma^2}{1 - \phi_1^2 - \phi_2^2 - \phi_3^2 }
+%     + \phi_3\frac{\left( \phi_1+ \phi_3 \phi_2 \right) \left( \frac{\sigma^2}{1 - \phi_1^2 - \phi_2^2 - \phi_3^2 }\right)}{1 - \phi_2 -  \phi_3 (\phi_1 + \phi_3)}
+% \end{align*}
+
+\section{معادلات یول واکر}
+
+\[
+\begin{cases}
+    \rho_1 = \phi_1 + \phi_2\rho_2 + \phi_3 \rho_3 \\
+    \rho_2 = \phi_1\rho_1 + \phi_2 + \phi_3 \rho_3 \\
+    \rho_3 = \phi_1\rho_1 + \phi_2 + \phi_3 
+\end{cases} \Rightarrow \begin{cases}
+    - \rho_1 + \phi_1 + \phi_2\rho_2 + \phi_3 \rho_3 = 0 \\
+    - \rho_2 + \phi_1\rho_1 + \phi_2 + \phi_3 \rho_3 = 0 \\
+    - \rho_3 + \phi_1\rho_1 + \phi_2 + \phi_3 = 0 
+\end{cases}
+\]
+
+\[ \left[\begin{matrix}
+    -1 & \phi_2 & \phi_3 \\
+    \phi_1 & -1 & \phi_3 \\
+    \phi_1 & \phi_2 & -1
+\end{matrix}\right] \left[ \begin{matrix}
+    \rho_1 \\ \rho_2 \\ \rho_3
+\end{matrix} \right] + \left[ \begin{matrix}
+    \phi_1 \\ \phi_2 \\ \phi_3
+\end{matrix} \right] = 0
+ \]
+
+با یافتن وارون ماتریس ضرایب معادله را حل می‌کنیم.
+
+\[ \left[\begin{matrix}
+    -1 & \phi_2 & \phi_3 \\
+    \phi_1 & -1 & \phi_3 \\
+    \phi_1 & \phi_2 & -1
+\end{matrix}\right]^{-1} = \frac{1}{\left|\begin{matrix}
+    -1 & \phi_2 & \phi_3 \\
+    \phi_1 & -1 & \phi_3 \\
+    \phi_1 & \phi_2 & -1
+\end{matrix}\right|}Adj\left(\begin{matrix}
+    -1 & \phi_2 & \phi_3 \\
+    \phi_1 & -1 & \phi_3 \\
+    \phi_1 & \phi_2 & -1
+\end{matrix}\right) \]
+\[= \frac{1}{\phi_2\phi_3 - 1 + \phi_2\phi_1(1+\phi_3) + \phi_3\phi_1(1+\phi_2)}\left[\begin{matrix}
+    1 - \phi_2\phi_3    &   \phi_1(1+\phi_3)    & \phi_1(1+\phi_2)\\
+    \phi_2(1+\phi_3)    &   1-\phi_1\phi-3      & \phi_2(1+\phi_1) \\
+    \phi_3(1+\phi_2)    &   \phi_3(1+\phi_1)    &   1-\phi_1\phi_2\\
+\end{matrix}\right]\]
+
+\[ \left[ \begin{matrix}
+    \rho_1 \\ \rho_2 \\ \rho_3
+\end{matrix} \right] = - \frac{1}{\phi_2\phi_3 - 1 + \phi_2\phi_1(1+\phi_3) + \phi_3\phi_1(1+\phi_2)}
+\left[\begin{matrix}
+    1 - \phi_2\phi_3    &   \phi_1(1+\phi_3)    & \phi_1(1+\phi_2)\\
+    \phi_2(1+\phi_3)    &   1-\phi_1\phi-3      & \phi_2(1+\phi_1) \\
+    \phi_3(1+\phi_2)    &   \phi_3(1+\phi_1)    &   1-\phi_1\phi_2\\
+\end{matrix}\right] \left[ \begin{matrix}
+    \phi_1 \\ \phi_2 \\ \phi_3
+\end{matrix} \right]\]
+
+\[ \left[ \begin{matrix}
+    \rho_1 \\ \rho_2 \\ \rho_3
+\end{matrix} \right] = \left[\begin{matrix}
+    \frac{\phi_1(1 - \phi_2\phi_3)  + \phi_2\phi_1(1+\phi_3) + \phi_3\phi_1(1+\phi_2)}{\phi_2\phi_3 - 1 + \phi_2\phi_1(1+\phi_3) + \phi_3\phi_1(1+\phi_2)} \\
+    \frac{\phi_1\phi_2(1+\phi_3) + \phi_2(1-\phi_1\phi_3) + \phi_3\phi_2(1+\phi_1)}{\phi_2\phi_3 - 1 + \phi_2\phi_1(1+\phi_3) + \phi_3\phi_1(1+\phi_2)}\\
+    \frac{\phi_1\phi_3(1+\phi_2) +\phi_2\phi_3(1+\phi_1) + \phi_3(1-\phi_1\phi_2)}{\phi_2\phi_3 - 1 + \phi_2\phi_1(1+\phi_3) + \phi_3\phi_1(1+\phi_2)}\\
+\end{matrix}\right] = \left[\begin{matrix}
+    \frac{\phi_1\left(1 + \phi_2 + \phi_3 + \phi_2\phi_3\right)}{\phi_1\phi_2 + \phi_1\phi_3 + \phi_2\phi_3 + 2\phi_1\phi_2\phi_3 - 1} \\ \\
+    \frac{\phi_2\left(1 + \phi_1 + \phi_3 + \phi_1\phi_3\right)}{\phi_1\phi_2 + \phi_1\phi_3 + \phi_2\phi_3 + 2\phi_1\phi_2\phi_3 - 1} \\ \\
+    \frac{\phi_3\left(1 + \phi_1 + \phi_2 + \phi_1\phi_2\right)}{\phi_1\phi_2 + \phi_1\phi_3 + \phi_2\phi_3 + 2\phi_1\phi_2\phi_3 - 1}
+\end{matrix}\right]
+\]
+\end{document}

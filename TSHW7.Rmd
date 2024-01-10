@@ -1,0 +1,16 @@
+---
+title: "Time Series Chapter 7 HW"
+author: "Pooria Assarehha"
+date: "2024-01-06"
+output: pdf_document
+---
+
+## Ex 7.1
+
+## Ex 7.3
+
+## Ex 7.4
+
+## Ex 7.6
+
+## Ex 7.10

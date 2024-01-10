@@ -1,0 +1,406 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={TSHW3},
+  pdfauthor={Pooria Assarehha},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{TSHW3}
+\author{Pooria Assarehha}
+\date{2023-11-08}
+
+\begin{document}
+\maketitle
+
+\hypertarget{time-series-i-hw3}{%
+\section{Time Series I HW3}\label{time-series-i-hw3}}
+
+\hypertarget{pooria-assarehha}{%
+\subsubsection{Pooria Assarehha}\label{pooria-assarehha}}
+
+\hypertarget{ex-3.3}{%
+\subsection{Ex 3.3}\label{ex-3.3}}
+
+if \(Y_t = \mu + e_t + e_{t-1}\) \[
+Var(\bar{Y}) = \frac{1}{n^2}Var(\sum^n_i Y_i) = \frac{1}{n^2}Var(\sum_i^n (\mu + e_i + e_{i-1})) = \frac{1}{n^2} Var(e_0 + e_n + 2\sum_i^{n-1} e_i ) = \frac{\sigma^2 + \sigma^2 + 4(n-1)\sigma^2}{n^2} = \frac{(4n-2)\sigma^2}{n^2}
+\] if \(Y_t = \mu + e_t\)
+
+\[
+Var(\bar{Y}) = \frac{1}{n^2}Var(\sum_i^n \mu + e_i ) = \frac{\sigma^2}{n^2}
+\]
+
+\hypertarget{ex-3.5}{%
+\subsection{Ex 3.5}\label{ex-3.5}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(TSA)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'TSA'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     acf, arima
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:utils':
+## 
+##     tar
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(wages)}
+\NormalTok{time.wages }\OtherTok{=} \FunctionTok{time}\NormalTok{(wages)}
+\FunctionTok{plot}\NormalTok{(wages)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{linfit.wages }\OtherTok{=} \FunctionTok{lm}\NormalTok{(wages}\SpecialCharTok{\textasciitilde{}}\FunctionTok{time}\NormalTok{(wages))}
+\FunctionTok{plot}\NormalTok{(wages)}
+\FunctionTok{abline}\NormalTok{(linfit.wages, }\AttributeTok{col=}\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OtherTok{=}\NormalTok{ linfit.wages}\SpecialCharTok{$}\NormalTok{residuals}
+\NormalTok{std.res }\OtherTok{=}\NormalTok{ res }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(res)}
+\NormalTok{std.res }\OtherTok{=}\NormalTok{ std.res}\SpecialCharTok{/}\FunctionTok{sd}\NormalTok{(res)}
+\FunctionTok{plot}\NormalTok{(std.res, }\AttributeTok{type =} \StringTok{\textquotesingle{}o\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quad.fit }\OtherTok{=} \FunctionTok{lm}\NormalTok{(wages}\SpecialCharTok{\textasciitilde{}}\NormalTok{time.wages}\SpecialCharTok{+}\FunctionTok{I}\NormalTok{(time.wages}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(wages)}
+\FunctionTok{lines}\NormalTok{(}\AttributeTok{x=}\FunctionTok{as.vector}\NormalTok{(time.wages), }\AttributeTok{y=}\FunctionTok{fitted}\NormalTok{(quad.fit), }\AttributeTok{col=}\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qres }\OtherTok{=}\NormalTok{ quad.fit}\SpecialCharTok{$}\NormalTok{residuals}
+\NormalTok{std.qres }\OtherTok{=}\NormalTok{ qres }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(qres)}
+\NormalTok{std.qres }\OtherTok{=}\NormalTok{ std.qres}\SpecialCharTok{/}\FunctionTok{sd}\NormalTok{(qres)}
+\FunctionTok{plot}\NormalTok{(std.qres, }\AttributeTok{type=}\StringTok{\textquotesingle{}o\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\hypertarget{ex-3.6}{%
+\subsection{Ex 3.6}\label{ex-3.6}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(beersales)}
+\FunctionTok{plot}\NormalTok{(beersales)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(beersales, }\AttributeTok{ylab=}\StringTok{\textquotesingle{}Monthly Beer Sales\textquotesingle{}}\NormalTok{, }\AttributeTok{type=}\StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(}\AttributeTok{y=}\NormalTok{beersales,}\AttributeTok{x=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{time}\NormalTok{(beersales)), }\AttributeTok{pch=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{season}\NormalTok{(beersales)))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mnth }\OtherTok{=} \FunctionTok{season}\NormalTok{(beersales)}
+\NormalTok{linbeer }\OtherTok{=} \FunctionTok{lm}\NormalTok{(beersales}\SpecialCharTok{\textasciitilde{}}\NormalTok{mnth)}
+\FunctionTok{summary}\NormalTok{(linbeer)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = beersales ~ mnth)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.5745 -0.4772  0.1759  0.7312  2.1023 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   12.48568    0.26392  47.309  < 2e-16 ***
+## mnthFebruary  -0.14259    0.37324  -0.382 0.702879    
+## mnthMarch      2.08219    0.37324   5.579 8.77e-08 ***
+## mnthApril      2.39760    0.37324   6.424 1.15e-09 ***
+## mnthMay        3.59896    0.37324   9.643  < 2e-16 ***
+## mnthJune       3.84976    0.37324  10.314  < 2e-16 ***
+## mnthJuly       3.76866    0.37324  10.097  < 2e-16 ***
+## mnthAugust     3.60877    0.37324   9.669  < 2e-16 ***
+## mnthSeptember  1.57282    0.37324   4.214 3.96e-05 ***
+## mnthOctober    1.25444    0.37324   3.361 0.000948 ***
+## mnthNovember  -0.04797    0.37324  -0.129 0.897881    
+## mnthDecember  -0.42309    0.37324  -1.134 0.258487    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.056 on 180 degrees of freedom
+## Multiple R-squared:  0.7103, Adjusted R-squared:  0.6926 
+## F-statistic: 40.12 on 11 and 180 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{std.r }\OtherTok{=} \FunctionTok{rstudent}\NormalTok{(linbeer)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(std.r, }\AttributeTok{x=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{time}\NormalTok{(beersales)), }\AttributeTok{ylab =} \StringTok{"Studentized Residuals"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Months"}\NormalTok{, }\AttributeTok{type =} \StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(}\AttributeTok{y=}\NormalTok{std.r,}\AttributeTok{x=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{time}\NormalTok{(beersales)), }\AttributeTok{pch=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{season}\NormalTok{(beersales)))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lin2.beer }\OtherTok{=} \FunctionTok{lm}\NormalTok{(beersales}\SpecialCharTok{\textasciitilde{}}\NormalTok{ mnth }\SpecialCharTok{+} \FunctionTok{time}\NormalTok{(beersales) }\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(}\FunctionTok{time}\NormalTok{(beersales)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(beersales)}
+\FunctionTok{lines}\NormalTok{(}\AttributeTok{y=}\NormalTok{lin2.beer}\SpecialCharTok{$}\NormalTok{fitted.values, }\AttributeTok{x =} \FunctionTok{as.vector}\NormalTok{(}\FunctionTok{time}\NormalTok{(beersales)), }\AttributeTok{col=}\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}\AttributeTok{y=}\FunctionTok{rstudent}\NormalTok{(lin2.beer), }\AttributeTok{x=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{time}\NormalTok{(beersales)), }\AttributeTok{ylab =} \StringTok{"Studentized Residuals"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"Time"}\NormalTok{, }\AttributeTok{type=}\StringTok{\textquotesingle{}l\textquotesingle{}}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(}\AttributeTok{y=}\FunctionTok{rstudent}\NormalTok{(lin2.beer), }\AttributeTok{x=}\FunctionTok{as.vector}\NormalTok{(}\FunctionTok{time}\NormalTok{(beersales)), }\AttributeTok{pch=}\FunctionTok{as.vector}\NormalTok{(mnth))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\hypertarget{ex-3.11}{%
+\subsection{Ex 3.11}\label{ex-3.11}}
+
+\hypertarget{a}{%
+\subsubsection{(a)}\label{a}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quad.wages }\OtherTok{=} \FunctionTok{lm}\NormalTok{(wages}\SpecialCharTok{\textasciitilde{}}\FunctionTok{time}\NormalTok{(wages) }\SpecialCharTok{+} \FunctionTok{I}\NormalTok{(}\FunctionTok{time}\NormalTok{(wages)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+\FunctionTok{summary}\NormalTok{(quad.wages)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = wages ~ time(wages) + I(time(wages)^2))
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.148318 -0.041440  0.001563  0.050089  0.139839 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)      -8.495e+04  1.019e+04  -8.336 4.87e-12 ***
+## time(wages)       8.534e+01  1.027e+01   8.309 5.44e-12 ***
+## I(time(wages)^2) -2.143e-02  2.588e-03  -8.282 6.10e-12 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.05889 on 69 degrees of freedom
+## Multiple R-squared:  0.9864, Adjusted R-squared:  0.986 
+## F-statistic:  2494 on 2 and 69 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\hypertarget{b}{%
+\paragraph{(b)}\label{b}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{runs}\NormalTok{(}\FunctionTok{rstudent}\NormalTok{(quad.wages))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $pvalue
+## [1] 1.56e-07
+## 
+## $observed.runs
+## [1] 15
+## 
+## $expected.runs
+## [1] 36.75
+## 
+## $n1
+## [1] 33
+## 
+## $n2
+## [1] 39
+## 
+## $k
+## [1] 0
+\end{verbatim}
+
+Very low p-value suggests we reject the independence of residuals.
+
+\hypertarget{c}{%
+\paragraph{(c)}\label{c}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{acf}\NormalTok{(}\FunctionTok{rstudent}\NormalTok{(quad.wages))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+High AutoCorrelation
+
+\hypertarget{d}{%
+\paragraph{(d)}\label{d}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{rstudent}\NormalTok{(quad.wages))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(}\FunctionTok{rstudent}\NormalTok{(quad.wages))}
+\FunctionTok{qqline}\NormalTok{(}\FunctionTok{rstudent}\NormalTok{(quad.wages))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{TS1HW3_files/figure-latex/unnamed-chunk-15-2.pdf}
+
+SKEWED
+
+\end{document}

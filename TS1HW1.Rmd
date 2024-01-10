@@ -1,0 +1,156 @@
+---
+title: "Time Series HW 1"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+Chapter 1 Exercises
+
+```{r}
+library(TSA)
+```
+
+# 1.1
+
+printing it to see how it looks
+
+```{r}
+data(larain)
+print(larain)
+```
+
+looks like it's a data type called Time Series, from the TSA library. checking its type.
+
+```{r}
+typeof(larain)
+```
+
+Why?
+
+```{r}
+plot(larain)
+```
+
+plotting the way the book does it.
+
+```{r}
+# setting the frame as square but it doesn't work
+# win.graph(width=3,height=3,pointsize=8)
+```
+
+```{r}
+plot(y = larain, x=zlag(larain), ylab='Inches of rain', xlab='Prev. Year Inches of rain')
+```
+
+# 1.2
+
+```{r}
+data(color)
+color
+```
+
+```{r}
+typeof(color)
+```
+
+```{r}
+plot(color,ylab='Color Property',xlab='Batch',type='o')
+```
+
+# 1.3
+
+iid sample of the Gaussian dist
+
+```{r}
+ex = rnorm(48)
+print(ex)
+typeof(ex)
+```
+
+```{r}
+plot(ex, ylab = "Value", xlab= "Index", type = "o")
+```
+
+```{r}
+#dev.off() #the guys at the company told me https://support.posit.co/hc/en-us/articles/200488548-Problem-with-Plots-or-Graphics-Device-in-the-RStudio-IDE
+# https://stackoverflow.com/questions/23050928/error-in-plot-new-figure-margins-too-large-scatter-plot
+par(mfrow = c(5,3), mar=c(1.5,1.5,1.5,1.5))
+for (i in 1:15){
+  plot(rnorm(48),main=paste('Experiment #', i), xlab = 'Index', ylab = 'Value', type = 'o')
+}
+```
+
+they all look like mere noise.
+
+# 1.4
+
+iid sample of Chi-squared dist
+
+```{r}
+plot(rchisq(48, 2), main="48 random chi2 (df=2) events", xlab='event', ylab='value', type='o')
+```
+
+```{r}
+par(mfrow = c(5,3), mar=c(1.5,1.5,1.5,1.5))
+for (i in 1:15){
+  plot(rchisq(48,2),main=paste('Experiment #', i), xlab = 'Index', ylab = 'Value', type = 'o')
+}
+```
+
+```{r, fig.height=10}
+par(mfrow = c(5,3))
+for (i in 1:15){
+  y = rchisq(48,2)
+  qqnorm(y, main=paste('Experiment #', i), xlab = 'Index', ylab = 'Value')
+  qqline(y)
+}
+```
+
+they all look random but not normal.
+
+# 1.5
+
+for a iid sample of t-dist
+
+```{r}
+plot(rt(48,5), main="48 iid t-Student events", xlab='event', ylab='value', type='o')
+```
+
+Drawing the differential plot next to time series plot to see if there is any temporal connection for the t-student dist.
+
+```{r}
+par(mfrow = c(5,2), mar=c(1.5,1.5,1.5,1.5))
+for (i in 1:5){
+  ex = rt(48,5)
+  plot(ex,main=paste('Experiment #', i), xlab = 'Index', ylab = 'Value', type = 'o')
+  plot(y=ex, x=zlag(ex), main='againt prev', ylab = "Value", xlab= "Previous")
+}
+```
+
+```{r, fig.height=10}
+par(mfrow = c(5,3))
+for (i in 1:15){
+  ex = rt(48,5)
+  qqnorm(ex, main=paste('Experiment #', i), xlab = 'Index', ylab = 'Value')
+  qqline(ex)
+}
+```
+
+moving around zero with some outliers.
+
+# 1.6
+
+```{r}
+data(tempdub)
+print(tempdub)
+typeof(tempdub)
+```
+
+```{r}
+plot(tempdub,main='Mountly Temp of Dubuque', ylab='Temprature', type='o')
+points(y=tempdub,x=time(tempdub), pch=as.vector(season(tempdub)))
+```
+
+Data expresses seasonality.

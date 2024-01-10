@@ -1,0 +1,163 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{mathtools,cancel}
+\usepackage{xepersian}
+\usepackage{fontspec}
+\settextfont[Scale=1]{B Mitra}
+% font for windows
+% \setlatintextfont[Scale=1]{Times New Roman}
+% font for linux 
+\setlatintextfont[Scale=1]{TeX Gyre Termes}
+
+\usepackage{setspace}
+\doublespacing
+\usepackage{fullpage}
+
+\title{
+    \lr{ARMA(2,1)} و
+    \lr{ARMA(1,2)}
+}
+\author{پوریا عصاره‌ها}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{\lr{ARMA(2,1)}}
+\[ Y_t = \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + e_t - \theta e_{t-1} \]
+
+\begin{align*}
+\gamma_k = & Cov(Y_t, Y_{t-k}) = Cov\left(  \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + e_t - \theta e_{t-1} ,
+                                            \phi_1 Y_{t-k-1} + \phi_2 Y_{t-k-2} + e_{t-k} - \theta e_{t-1-k}\right) \\
+= & \phi_1^2 Cov(Y_{t-1}, Y_{t-k-1}) 
++   \phi_2\phi_1 Cov(Y_{t-2}, Y_{t-k-1}) 
++   \phi_1 Cov(e_t, Y_{t-k-1}) 
++   \theta \phi_1 Cov(e_{t-1}, Y_{t-k-1}) 
+  \\ &
++   \phi_2\phi_1 Cov(Y_{t-1}, Y_{t-k-2}) 
++   \phi_2^2 Cov(Y_{t-2}, Y_{t-k-2}) 
++   \phi_2 Cov(e_t, Y_{t-k-2}) 
++   \theta \phi_2 Cov(e_{t-1}, Y_{t-k-2}) 
+   \\ &
++   \phi_1 Cov(Y_{t-1}, e_{t-k}) 
++   \phi_2 Cov(Y_{t-2}, e_{t-k}) 
++   Cov(e_t, e_{t-k}) 
++   \theta Cov(e_{t-1}, e_{t-k}) 
+   \\ &
++   \theta\phi_1  Cov(Y_{t-1}, e_{t-1-k}) 
++   \phi_2\theta Cov(Y_{t-2}, e_{t-1-k}) 
++   Cov(e_t, e_{t-1-k}) 
++   \theta^2 Cov(e_{t-1}, e_{t-1-k}) 
+\end{align*}
+
+\begin{align*}    
+ = & \phi_1^2 \gamma_k 
+ +   \phi_2\phi_1 \gamma_{k+1} 
+ +   \phi_1 \cancelto{0}{Cov(e_t, Y_{t-k-1})} 
+ +   \theta \phi_1 Cov(e_{t-1}, Y_{t-k-1}) 
+   \\ &
+ +   \phi_2\phi_1 \gamma_{k+1}
+ +   \phi_2^2 \gamma_k
+ +   \phi_2 \cancelto{0}{Cov(e_t, Y_{t-k-2})} 
+ +   \theta \phi_2 \cancelto{0}{Cov(e_{t-1}, Y_{t-k-2})}
+    \\ &
+ +   \phi_1 Cov(Y_{t-1}, e_{t-k}) 
+ +   \phi_2 Cov(Y_{t-2}, e_{t-k}) 
+ +   Cov(e_t, e_{t-k}) 
+ +   \theta^2 Cov(e_{t-1}, e_{t-k}) 
+    \\ &
+ +   \theta\phi_1  Cov(Y_{t-1}, e_{t-1-k}) 
+ +   \phi_2\theta Cov(Y_{t-2}, e_{t-1-k}) 
+ +   Cov(e_t, e_{t-1-k}) 
+ +   \theta^2 Cov(e_{t-1}, e_{t-1-k}) 
+\end{align*}
+
+\begin{align*}
+ \Rightarrow & \quad 
+ \gamma_k - \phi_2^2 \gamma_k - \phi_1^2 \gamma_k = \phi_2\phi_1 \gamma_{k+1} + \phi_2\phi_1 \gamma_{k+1} + \theta \phi_1 Cov(e_{t-1}, Y_{t-k-1})  \\
+ + & \phi_1 Cov(Y_{t-1}, e_{t-k}) 
+ +   \phi_2 Cov(Y_{t-2}, e_{t-k}) 
+ +   Cov(e_t, e_{t-k}) 
+ +   \theta^2 Cov(e_{t-1}, e_{t-k}) 
+    \\ &
+ +   \theta\phi_1  Cov(Y_{t-1}, e_{t-1-k}) 
+ +   \phi_2\theta Cov(Y_{t-2}, e_{t-1-k}) 
+ +   Cov(e_t, e_{t-1-k}) 
+ +   \theta^2 Cov(e_{t-1}, e_{t-1-k}) 
+ \\ 
+\end{align*}
+
+\section*{$\gamma_0$ با جایگذاری}
+\begin{align*}
+   & \gamma_0 - \phi_2^2 \gamma_0 - \phi_1^2 \gamma_0 = \phi_2\phi_1 \gamma_{1} + \phi_2\phi_1 \gamma_{1} 
+   + \theta \phi_1 \cancelto{\sigma_2^e}{Cov(e_{t-1}, Y_{t-1})}  \\
+ + & \phi_1 \cancelto{0}{Cov(Y_{t-1}, e_{t}) }
+ +   \phi_2 \cancelto{0}{Cov(Y_{t-2}, e_{t})}
+ +   Cov(e_t, e_{t}) 
+ +   \theta^2 \cancelto{0}{Cov(e_{t-1}, e_{t})}
+    \\ &
+ +   \theta\phi_1  \cancelto{\sigma_2^e}{Cov(Y_{t-1}, e_{t-1})}
+ +   \phi_2\theta \cancelto{0}{Cov(Y_{t-2}, e_{t-1})}
+ +   \cancelto{0}{Cov(e_t, e_{t-1}) }
+ +   \theta^2 \cancelto{\sigma_2^e}{Cov(e_{t-1}, e_{t-1})}
+\end{align*}
+\[ \gamma_0 - \phi_2^2 \gamma_0 - \phi_1^2 \gamma_0 = \phi_2\phi_1 \gamma_{1} 
++ \phi_2\phi_1 \gamma_{1} + 2\theta \phi_1 \sigma^2_e + \sigma^2_e + \theta^2 \sigma^2_e \]
+\[ \gamma_0 = \frac{\phi_2\phi_1 \gamma_{1} + \phi_2\phi_1 \gamma_{1} + 2\theta \phi_1 \sigma^2_e + \sigma^2_e + \theta^2 \sigma^2_e}{1-\phi_1^2 - \phi_2^2}\]
+
+
+\section{\lr{ARMA(1,2)}}
+\[ Y_t = \phi_1 Y_{t-1} + e_t - \theta_1 e_{t-1} - \theta_2 e_{t-2}  \]
+\begin{align*}
+   Var\left( \phi_1 Y_{t-1} + e_t - \theta_1 e_{t-1} - \theta_2 e_{t-2} \right) 
+   = & \phi_1^2 Var(Y_{t-1})  + Var(e_t) + \theta_1^2 Var(e_{t-1}) + \theta_2^2 Var(e_{t-2}) \\
+   & + 2\phi_1 Cov(Y_{t-1}, e_t) -2 \phi_1\theta_1 Cov(Y_{t-1}, e_{t-1}) - 2\phi_1\theta_2 Cov(Y_{t-1}, e_{t-2}) \\
+   & - 2\theta_1Cov(e_t,e_{t-1}) - \theta_2 Cov(e_t, e_{t-2}) + 2\theta_1\theta_2 Cov(e_{t-1}, e_{t-2}) \\
+  \gamma_0 = & \phi_1^2 \gamma_0 + \theta_1^2 \sigma^2  + \theta_2^2 \sigma^2 -2 \phi_1\theta_1 \sigma^2 + 2\phi_1\theta_2 \theta_1 \sigma^2 \\
+  & \gamma_0 = \frac{\sigma^2\left(\theta_1^2 + \theta_2^2 -2 \phi_1\theta_1 + 2\phi_1\theta_2 \theta_1\right)}{1-\phi_1^2}
+\end{align*}
+\begin{align*}
+   \gamma_k & = Cov(\phi_1 Y_{t-1} + e_t - \theta_1 e_{t-1} - \theta_2 e_{t-2} , \ \phi_1 Y_{t-k-1} + e_{t-k} - \theta_1 e_{t-k-1} - \theta_2 e_{t-k-2}) \\
+   &  = \phi_1^2 Cov(Y_{t-1}, Y_{t-k-1}) + \phi_1 Cov(Y_{t-1} , e_{t-k}) - \phi_1\theta_1 Cov(Y_{t-1} ,e_{t-k-1}) -\phi_1 \theta_2 Cov(Y_{t-1}, e_{t-k-2}) \\
+   + & \phi_1 Cov(e_t,Y_{t-k-1}) + Cov(e_t, e_{t-k}) - \theta_1 Cov(e_t, e_{t-k-1}) - \theta_2 Cov( e_t, e_{t-k-2}) \\
+   - & \theta_1 \phi_1 Cov( e_{t-1} , Y_{t-k-1}) - \theta_1 Cov(e_{t-1} , e_{t-k})  + \theta_1^2 Cov(e_{t-1} , e_{t-k-1}) + \theta_1\theta_2 Cov(e_{t-1},  e_{t-k-2}) \\
+   - & \theta_2\phi_1 Cov(e_{t-2}, Y_{t-k-1}) - \theta_2 Cov(e_{t-2}, e_{t-k}) + \theta_2\theta_1 Cov(e_{t-2}, e_{t-k-1}) + \theta_2^2 Cov(e_{t-2}, e_{t-k-2})
+\end{align*}
+\begin{align*}
+   \gamma_k &  = \phi_1^2 \gamma_k + \phi_1 Cov(Y_{t-1} , e_{t-k}) - \phi_1\theta_1 Cov(Y_{t-1} ,e_{t-k-1}) -\phi_1 \theta_2 Cov(Y_{t-1}, e_{t-k-2}) \\
+   + & \phi_1 Cov(e_t,Y_{t-k-1}) + Cov(e_t, e_{t-k})  \\
+   - & \theta_1 \phi_1 Cov( e_{t-1} , Y_{t-k-1}) - \theta_1 Cov(e_{t-1} , e_{t-k})  + \theta_1^2 Cov(e_{t-1} , e_{t-k-1})  \\
+   - & \theta_2\phi_1 Cov(e_{t-2}, Y_{t-k-1}) - \theta_2 Cov(e_{t-2}, e_{t-k}) + \theta_2\theta_1 Cov(e_{t-2}, e_{t-k-1}) + \theta_2^2 Cov(e_{t-2}, e_{t-k-2})
+\end{align*}
+
+\begin{align*}
+   \gamma_0 &  = \phi_1^2 \gamma_0 + \phi_1 \cancel{Cov(Y_{t-1} , e_{t})} \\
+   + & \phi_1 \cancel{Cov(e_t,Y_{t-1})} + Cov(e_t, e_{t})  \\
+   - & 2\theta_1 \phi_1 Cov( e_{t-1} , Y_{t-1}) - \theta_1 \cancel{Cov(e_{t-1} , e_{t})}  + \theta_1^2 Cov(e_{t-1} , e_{t-1})  \\
+   - & 2\theta_2\phi_1 Cov(e_{t-2}, Y_{t-1}) - \theta_2 \cancel{Cov(e_{t-2}, e_{t})} + \theta_2\theta_1 \cancel{Cov(e_{t-2}, e_{t-1})} + \theta_2^2 Cov(e_{t-2}, e_{t-2})
+\end{align*}
+
+\begin{align*}
+   \gamma_0 &  = \frac{\sigma^2_e\left( 1 - 2\theta_1 \phi_1   + \theta_1^2 - 2\theta_2\phi_1 (\phi_1 - \theta_1)  + \theta_2^2 \right) }{1 - \phi_1^2 }
+\end{align*}
+
+\begin{align*}
+   \gamma_1 &  = \phi_1^2 \gamma_1 + \phi_1 Cov(Y_{t-1} , e_{t-1}) - \phi_1\theta_1 Cov(Y_{t-1} ,e_{t-2}) -\phi_1 \theta_2 Cov(Y_{t-1}, e_{t-3}) \\
+   + & \phi_1 \cancelto{0}{Cov(e_t,Y_{t-2})} + \cancelto{0}{Cov(e_t, e_{t-1})}  \\
+   - & \theta_1 \phi_1 \cancelto{0}{Cov( e_{t-1} , Y_{t-2})} - \theta_1 Cov(e_{t-1} , e_{t-1})  + \theta_1^2 \cancelto{0}{Cov(e_{t-1} , e_{t-2})}  \\
+   - & \theta_2\phi_1 Cov(e_{t-2}, Y_{t-2}) - \theta_2 \cancelto{0}{Cov(e_{t-2}, e_{t-1})} + \theta_2\theta_1 Cov(e_{t-2}, e_{t-2}) + \theta_2^2 \cancelto{0}{Cov(e_{t-2}, e_{t-3})}
+\end{align*}
+
+\begin{align*}
+   \gamma_1 &  = \phi_1^2 \gamma_1 + \phi_1 \sigma^2_e - \phi_1\theta_1 \sigma^2_e(\phi_1 - \theta_1) \\
+   - & \phi_1 \theta_2 Cov(\phi_1Y_{t-2} + e_{t-1} -\theta_1 e_{t-2} - \theta_2 e_{t-3}, e_{t-3}) \\
+   - & \theta_1 \sigma^2_e - \theta_2\phi_1 \sigma^2_e + \theta_2\theta_1 \sigma^2_e
+\end{align*}
+
+\begin{align*}
+   \gamma_1 &  = \sigma^2_e\frac{\phi_1 - \phi_1\theta_1(\phi_1 - \theta_1)
+   - \phi_1 \theta_2 (\phi_1(\phi_1 - \theta_1) - \theta_2)
+   - \theta_1 - \theta_2\phi_1 + \theta_2\theta_1}{1 - \phi_1^2}
+\end{align*}
+\end{document}

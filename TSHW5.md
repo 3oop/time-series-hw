@@ -1,0 +1,91 @@
+# Pooria Assarehha 
+## Time Series HW5
+
+## Ex 5.1
+(a)
+$$W_t = Y_t - Y_{t-1} = Y_{t-1} - 0.25Y_{t-2} + e_t - 0.1e_{t-1} - Y_{t-1} = -0.25 Y_{t-2} + e_t - 0.1e_{t-1}$$
+
+$$ \nabla Y_t \sim \text{ARMA(2,1)} \quad \Rightarrow \quad  Y_t  \sim \text{ARIMA(2,1,1)} $$ 
+
+$$\phi_1 = 0 \quad, \quad \phi_2 = -0.25 \quad , \quad \theta_1 = 0.1$$
+
+(b) 
+$$\nabla (\nabla Y_t) = Y_t - 2Y_{t-1} + Y_{t-2} = 2Y_{t-1} - Y_{t-2} + e_t - 2Y_{t-1} + Y_{t-2} = e_t \sim \text{ARMA(0,0)}$$
+
+(c) ARMA(2,2) $$\phi_1 = 0.5 \quad , \quad \phi_2 = -0.5 \quad , \quad \theta_1 = 0.5 \quad , \quad \theta_2 = -0.25$$
+
+## Ex 5.2
+(a)
+$$ E[Y_t - Y_{t-1}] = E[3 + e_t - 0.75e_{t-1}] = 3 \quad , \quad Var(\nabla Y_t) = (1 + \frac{9}{16})\sigma^2_e$$
+
+(b)
+$$E[10 + (1.25 - 1)Y_{t-1} - 0.25Y_{t-2} + e_t - 0.1e_{t-1}] = E [10 - \frac{1}{4} (Y_{t-1} - Y_{t-2}) +  + e_t - 0.1e_{t-1}]$$
+
+$$\Rightarrow \quad E[\nabla Y_t] = 10 + \frac{1}{4}E[\nabla Y_{t-1}] \Rightarrow \quad = \frac{10}{1- \frac{1}{4}} = \frac{40}{3}$$
+
+$$Var(\nabla Y_t) = Var(10 + 0.25 \nabla Y_{t-1} + e_t - 0.1e_{t-1}) = \frac{1}{8}Var(\nabla Y_{t-1}) + \sigma^2_e + 0.01 \sigma^2_e$$
+
+(c)
+$$\nabla Y_t = 5 + \nabla Y_{t-1} - 0.7 \nabla Y_{t-2}  + e_t -0.5e_{t-1} + 0.25e_{t-2}$$
+
+$$E[\nabla Y_t] = 5 + E[\nabla Y_{t-1}] - 0.7E[\nabla Y_{t-2}] >> \infty $$
+
+$$Var(\nabla Y_t) = Var(\nabla Y_{t-1}) + 0.49Var(\nabla Y_{t-2}) + \frac{21}{16}\sigma^2_e$$
+
+## Ex 5.3
+
+(a) $$E[Y_t] = 0 + 0 + \dots + 0 $$
+$$Cov(Y_t, Y_{t-k}) = Cov(e_t + c\sum_{t-k+1}^t, Y_{t-k}) + \sum_i^{t-k}\sum_j^{t-k} c^2Cov(e_i , e_j) = 0 + c^2(t-k)\sigma^2_e$$
+not stationary.
+
+(b)
+$$\nabla Y_t = e_t \Rightarrow E[\nabla Y_t] = 0 \quad , \quad Var(\nabla Y_t) = \sigma^2_e \quad , \quad Cov(Y_t, Y_{t-k}) = 0 \quad \forall k > 0$$
+
+(c) $Y_t \sim$ ARIMA(0,1,0)
+
+## Ex 5.4
+(a) No, Variance depends on time. $Var(X_t) = t\sigma^2_e$
+
+(b) Yes,
+$$ Y_t - Y_{t-1} = A + Bt + X_t - A -B(t-1) - X_{t-1} = B + e_t $$ 
+
+(c) No, still non-stationary $Var(A + Bt + X_t) = \sigma^2_A + \sigma^2_B + tCov(A,B) + t\sigma^2_e$
+
+(d) Yes, $Var(B + e_t) = \sigma^2_B + \sigma^2_e$ and $E[B + e_t] = B$
+## Ex 5.5
+
+```{r}
+et = c(0.63, -1.25, 1.80, 1.51, 1.56, 0.62, 0.64, -0.98)
+Yt = c(0.63, 3.72, 12.67, 39.57, 119.33, 358,63, 1074.91)
+```
+
+## Ex 5.6
+
+$$\rho_1 = \frac{\gamma_1}{\gamma_0} < \frac{1}{2} \quad \Rightarrow \quad 2\gamma_1 < \gamma_0 \Rightarrow \quad \gamma_1 < \gamma_0 \xrightarrow{+ \gamma_0 - \gamma_1} \gamma_0 < 2\gamma_2 - \gamma_1 $$
+
+$$Var(Y_t - Y_{t-1}) = 2\gamma_0 - \gamma_1 \quad \Rightarrow Var(Y_t) < Var(\nabla Y_t)$$ 
+
+## Ex 5.7
+
+A $\sim$ ARIMA(2,0,0) $\quad \phi_1 = 0.9 \  , \ \phi_2 = 0.09$
+
+B $\sim$ ARIMA(0,1,1) $\quad \theta_1 = 0.1$
+
+## Ex 5.8
+(a) (b)
+$$Y_t = 3Y_{t-1} + e_t \quad , Y_0 = 0 \ , \ Y_1 = 3(0) + e_1 \quad , \quad Y_2 = 3e_1 + e_2$$
+
+$$Y_t = e_t + \sum_i^{t-1} 3^i e_{t-i} \quad , \quad Var(Y_t) = \sigma^2_e(\sum^{t-1}_0 3^{2i}) = \sigma^2_e (\frac{1 - 9^t}{1 - 9}) $$ 
+(c)
+$$ Cov(Y_t, Y_{t-k})  $$
+
+(d) 
+
+## Ex 5.9 
+
+$$\rho_1 = \frac{-1}{2 + \frac{\sigma^2_{\epsilon}}{\sigma^2_e}}$$
+
+## Ex 5.10
+?
+
+## Ex 5.11

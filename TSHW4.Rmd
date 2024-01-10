@@ -1,0 +1,106 @@
+---
+title: "Time Series HW4"
+author: "Pooria Assarehha"
+date: "2023-11-14"
+output: pdf_document
+---
+
+## Ex 4.1
+
+$Y_t$ looks like a MA(2) process, but has mean of 5. $E[Y_t] = 5$ , the intercept has no effect on auto covariance and auto correlation functions.
+$$
+Var(Y_t) = \sigma_e^2 + \frac{1}{4}\sigma_e^2 + \frac{1}{16}\sigma_e^2 = \frac{21}{16}\sigma^2_e
+\quad , \quad Cov(Y_t, Y_{t-1}) = Cov(e_t - \frac{1}{2}e_{t-1} + \frac{1}{4}e_{t-2} , \ e_{t-1} - \frac{1}{2}e_{t-2} + \frac{1}{4}e_{t-3} ) =\sigma^2_e( -\frac{1}{2} -\frac{1}{8}) 
+$$
+
+$$
+Cov(Y_t, Y_{t-2}) = Cov(e_t - \frac{1}{2}e_{t-1} + \frac{1}{4}e_{t-2} , \ e_{t-2} - \frac{1}{2}e_{t-3} + \frac{1}{4}e_{t-4}) = \frac{1}{4}\sigma^2_e \quad , \quad \rho = \begin{cases} \frac{-\frac{1}{2} - \frac{1}{8}}{1 + \frac{1}{4} + \frac{1}{16}} = \frac{- 5 \times 16}{8 \times 21} = -\frac{10}{21} & k = 1\\
+\frac{16}{21\times 4} = \frac{4}{21} & k=2  \\ 0 & k > 2 \end{cases}
+$$
+
+## Ex 4.2
+
+```{r, fig.height=9, fig.width=6}
+th <- cbind(theta1 = c(0.5, 1.2, -1), theta2 = c(0.4, -0.7, -0.6))
+par(mfrow=c(3,1), mar = c(5.1, 4.1, 4.1, 2.1))
+for (i in 1:3) 
+{
+  acfpoints <- ARMAacf(ar = 0 , ma = -th[i,], lag.max = 5)
+  plot(acfpoints, xaxt="n", type="h",
+       xlab='Time Lag (k)', 
+       ylab =expression(rho[k]) , 
+       main = bquote("Auto-Correlations for MA(2) with " ~  theta[1] ~ "=" ~ 
+                       .(th[i,1]) ~  ", " ~ theta[2] ~ "=" ~ .(th[i,2]) )
+  )
+  axis(1, at=1:6, labels = names(acfpoints))
+  abline(h=0)
+}
+```
+
+## Ex 4.6
+$E[W_t] = 0$ and we know acf of AR(1).
+$$
+Cov(W_t, W_{t-k}) = E[W_t W_{t-k}] = E[Y_tY_{t-k} - Y_tY_{t-k-1} - Y_{t-1}Y_{t-k} + Y_{t-1}Y_{t-k-1}] = E[Y_tY_{t-k}] + E[Y_{t-1}Y_{t-k-1}] - E[Y_tY_{t-k-1}] - E[Y_{t-1}Y_{t-k}] 
+$$
+
+for AR(1) $\gamma_k =\phi^k \frac{\sigma^2_e}{1-\phi^2}$ , and we use the fact that $\gamma_k = E[Y_t Y_{t-k}]$
+
+$$
+2\gamma_k -\gamma_{k+1} - \gamma_{k-1} = 2\phi^k \frac{\sigma^2_e}{1-\phi^2} - \phi^{k+1} \frac{\sigma^2_e}{1-\phi^2} - \phi^{k-1} \frac{\sigma^2_e}{1-\phi^2}
+$$
+
+$$
+\phi^k \frac{\sigma^2_e}{1-\phi^2}\left( 2 - \phi - \frac{1}{\phi} \right) = \phi^k \frac{\sigma^2_e}{1-\phi^2} \frac{-(\phi - 1)^2}{\phi} = \sigma^2_e\phi^{k-1}\frac{(\phi - 1)(1-\phi)}{(1+\phi)(1-\phi)} = \sigma^2_e\phi^{k-1}\frac{\phi - 1}{\phi + 1}
+$$
+
+## Ex 4.11
+for an ARMA(1,2) After 2 time lags we can show that the MA part will have no effect in $\rho_k$
+$$
+Cov(Y_t, Y_{t-k}) = E[Y_tY_{t-k}] = \phi E[Y_{t-1} Y_{t-k}] + E[e_t Y_{t-k}] + \theta_1 E[Y_{t-k}e_{t-1}] + \theta_2E[Y_{t-k}e_{t-2}] 
+$$
+for $k=1$
+$$
+ \gamma_1 = \phi E[Y_{t-1} Y_{t-1}] + E[e_t Y_{t-1}] + \theta_1 E[Y_{t-1}e_{t-1}] + \theta_2E[Y_{t-1}e_{t-2}] = \phi \gamma_0 + 0 + \theta_1\sigma_e^2 + \theta_1\theta_2\sigma^2_e
+$$
+for $k=2$
+$$
+ \gamma_2 = \phi E[Y_{t-1} Y_{t-2}] + E[e_t Y_{t-2}] + \theta_1 E[Y_{t-2}e_{t-1}] + \theta_2E[Y_{t-2}e_{t-2}] = \phi \gamma_1 + 0 + 0 + \theta_2\sigma^2_e \Rightarrow \rho_2 = \phi \rho_{k-1} + \theta_2 \frac{\sigma^2_e}{\gamma_0}
+$$
+for $k>2$
+$$
+ \gamma_{k>2} = \phi \gamma_{k-1} + E[e_t Y_{t-k}] + \theta_1 E[Y_{t-k}e_{t-1}] + \theta_2E[Y_{t-k}e_{t-2}] = \phi \gamma_{k-1} + 0 + 0 + 0 \Rightarrow \rho_k = \phi\rho_{k-1}
+$$
+
+## Ex 4.21
+##### (a)
+$$
+\gamma_0 = 2.25\sigma^2_e \quad , \quad \gamma_k = E[Y_{t-k} e_{t-1}] - E[Y_{t-k}e_{t-2}] + 0.5E[Y_{t-k}e_{t-3}] \Rightarrow \begin{cases}
+0 + \sigma^2_e - 0.5\sigma^2_e & k=1 \\
+0 + 0 + 0.5\sigma^2_e & k=2 \\
+0 & k>3 
+\end{cases} 
+\rho_k = \begin{cases}
+\frac{2}{9} & k=1,2 \\
+0 & k>3 
+\end{cases} 
+$$
+
+##### (b)
+looks like a MA(2) but with one time lag. meaning if $\{X_t\}$ is an MA(2), then $\{X_{t-1}\} = \{Y_t\}$ 
+
+## Ex 4.23
+##### (a)
+$$
+Cov(b_t, b_{t-k}) = E[b_tb_{t-k}] = E[Y_{t} Y_{t-k}] -\phi E[Y_tY_{t-k+1}] - \phi E[Y_{t+1}Y_{t-k}] + \phi^2 E[Y_{t+1}Y_{t-k+1}] = \gamma_k - \phi\gamma_{k-1} - \phi \gamma_{k+1}  + \phi^2 \gamma_k 
+$$
+
+for AR(1) we know $\gamma_k = \phi \gamma_{k-1}$
+
+$$
+\Rightarrow \quad \phi \gamma_{k-1} - \phi \gamma_{k-1}  + \phi (\phi \gamma_k) - \phi \gamma_{k+1} = 0
+$$
+
+##### (b)
+$$
+Cov(b_t, Y_{t+k}) = Cov(Y_t, Y_{t+k}) - \phi Cov(Y_{t+1}, Y_{t+k}) = \gamma_k - \phi \gamma_{k-1} = 0
+$$

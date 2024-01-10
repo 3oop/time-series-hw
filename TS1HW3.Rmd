@@ -1,0 +1,127 @@
+---
+title: "TSHW3"
+author: "Pooria Assarehha"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# Time Series I HW3
+
+### Pooria Assarehha
+
+## Ex 3.3
+
+if $Y_t = \mu + e_t + e_{t-1}$ $$
+Var(\bar{Y}) = \frac{1}{n^2}Var(\sum^n_i Y_i) = \frac{1}{n^2}Var(\sum_i^n (\mu + e_i + e_{i-1})) = \frac{1}{n^2} Var(e_0 + e_n + 2\sum_i^{n-1} e_i ) = \frac{\sigma^2 + \sigma^2 + 4(n-1)\sigma^2}{n^2} = \frac{(4n-2)\sigma^2}{n^2}
+$$ if $Y_t = \mu + e_t$
+
+$$
+Var(\bar{Y}) = \frac{1}{n^2}Var(\sum_i^n \mu + e_i ) = \frac{\sigma^2}{n^2}
+$$
+
+## Ex 3.5
+
+```{r}
+library(TSA)
+data(wages)
+time.wages = time(wages)
+plot(wages)
+```
+
+```{r}
+linfit.wages = lm(wages~time(wages))
+plot(wages)
+abline(linfit.wages, col='red')
+```
+
+```{r}
+res = linfit.wages$residuals
+std.res = res - mean(res)
+std.res = std.res/sd(res)
+plot(std.res, type = 'o')
+```
+
+```{r}
+quad.fit = lm(wages~time.wages+I(time.wages^2))
+plot(wages)
+lines(x=as.vector(time.wages), y=fitted(quad.fit), col='red')
+```
+
+```{r}
+qres = quad.fit$residuals
+std.qres = qres - mean(qres)
+std.qres = std.qres/sd(qres)
+plot(std.qres, type='o')
+```
+
+## Ex 3.6
+
+```{r}
+data(beersales)
+plot(beersales)
+```
+
+```{r}
+plot(beersales, ylab='Monthly Beer Sales', type='l')
+points(y=beersales,x=as.vector(time(beersales)), pch=as.vector(season(beersales)))
+```
+
+```{r}
+mnth = season(beersales)
+linbeer = lm(beersales~mnth)
+summary(linbeer)
+std.r = rstudent(linbeer)
+```
+
+```{r}
+plot(std.r, x=as.vector(time(beersales)), ylab = "Studentized Residuals", xlab = "Months", type = 'l')
+points(y=std.r,x=as.vector(time(beersales)), pch=as.vector(season(beersales)))
+```
+
+```{r}
+lin2.beer = lm(beersales~ mnth + time(beersales) + I(time(beersales)^2))
+plot(beersales)
+lines(y=lin2.beer$fitted.values, x = as.vector(time(beersales)), col='red')
+```
+
+```{r}
+plot(y=rstudent(lin2.beer), x=as.vector(time(beersales)), ylab = "Studentized Residuals", xlab="Time", type='l')
+points(y=rstudent(lin2.beer), x=as.vector(time(beersales)), pch=as.vector(mnth))
+```
+
+## Ex 3.11
+
+### (a)
+
+```{r}
+quad.wages = lm(wages~time(wages) + I(time(wages)^2))
+summary(quad.wages)
+```
+
+#### (b)
+
+```{r}
+runs(rstudent(quad.wages))
+```
+
+Very low p-value suggests we reject the independence of residuals.
+
+#### (c)
+
+```{r}
+acf(rstudent(quad.wages))
+```
+
+High AutoCorrelation
+
+#### (d)
+
+```{r}
+hist(rstudent(quad.wages))
+qqnorm(rstudent(quad.wages))
+qqline(rstudent(quad.wages))
+```
+
+SKEWED

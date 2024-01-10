@@ -1,0 +1,150 @@
+---
+title: "TS1HW2"
+author: "Pooria Assarehha"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Ex 2.1
+
+$$
+\begin{align}
+a) & \ Var(X+Y) = Var(X) + Var(Y) + 2Cov(X,Y) = 9 + 4 + 2\left(0.25 \sqrt{9\times 4} \right) = 16 \\
+b) & \ Cov(X, X+Y) = Cov(X,X) + Cov(X,Y) = 9 + 1.5 = 10.5 \\
+c) & \ Corr(X+Y,X-Y) = \frac{Cov(X+Y, X-Y)}{\sqrt{Var(X+Y)Var(X-Y)}} 
+\end{align}
+$$
+
+$$
+\frac{Cov(X,X)+Cov(Y,X) + Cov(X,-Y) + Cov(Y,-Y)}{\sqrt{(16)(9+4-2(1.5))}} = \frac{9+1.5-1.5-4}{4\sqrt{10}} = \frac{5}{4\sqrt{10}}
+$$
+
+## Ex 2.2
+
+$$
+Cov(X+Y,X-Y) = Cov(X,X)+Cov(Y,X) + Cov(X,-Y) + Cov(Y,-Y) = Var(X)-Var(Y) = 0
+$$
+
+## Ex 2.3
+
+$$
+a) \quad \forall t \quad Y_t  = X \sim \mu , \sigma^2 \ \Rightarrow \ Y \ \text{is time invariant} \ \Rightarrow \ F_{(Y_t, Y_s)} = F_{(X,X)} = F_{(Y_{t-k}, Y_{s-k})} \ \Rightarrow \ \text{Strictly Stationary} \\
+b) \quad \gamma_{s,t} = \gamma_k = Cov(Y_t, Y_{t-k}) = Var(X) = \sigma^2
+$$
+
+```{r}
+plot(rep(rnorm(1) , 48), xlab='time', type='o',ylab = 'mu = 0, variance = 1')
+```
+
+## Ex 2.4
+
+$$
+\theta = 3 \quad \rho_{s,t} = \frac{Cov(Y_s,Y_t)}{\sqrt{Var(Y_t)Var(Y_s)}} = \begin{cases}
+|s-t| = 0 & \quad \frac{Cov(e_s + 3e_{s-1} , e_s + 3e_{s-1} )}{Var(Y_s)} = \frac{Var(Y_s)}{Var(Y_s)} = 1 \\
+|s-t| = 1 & \quad \frac{Cov(e_s + 3e_{s-1}, e_{s-1} + 3e_{s-2} )}{\sqrt{Var(Y_s)Var(Y_{s-1})}}  = \frac{Cov(3e_{s-1}, e_{s-1})}{\sigma^2 + 9\sigma^2} = 0.3 \\
+|s-t| > 1 & 0
+\end{cases} \\
+\theta = \frac{1}{3} \quad  \rho_{s,t} =\begin{cases}
+|s-t| = 0 & \quad 1  \\
+|s-t| > 1 & \quad 0 \\
+|s-t| = 1 & \quad \frac{Cov(e_s + \frac{1}{3}e_{s-1}, e_{s-1} + \frac{1}{3}e_{s-2} )}{\sqrt{Var(Y_s)Var(Y_{s-1})}}  = \frac{Cov(\frac{1}{3}e_{s-1}, e_{s-1})}{\sigma^2 + \frac{1}{9}\sigma^2} = \frac{9}{30} = 0.3 \\
+\end{cases}
+$$
+for $\theta = 3$ we must observe less jumpiness than $\theta = \frac{1}{3}$.
+
+## Ex 2.5
+
+$$
+a) \quad  E(5+2t + X_t) = 5 + 2t \\
+b) \quad  \gamma'_{s,t} = Cov(Y_s,Y_t) = Cov(5+2s+X_s, 5+2t+X_t) = Cov(X_s,X_t) = \gamma_{t-s} \\
+c) \quad \text{No, cuz the mean is time-dependent}
+$$
+
+## Ex 2.6 
+
+
+$X_t$ is stationary then the a-cov-f only depends on the lag  $ = \gamma_k$ 
+
+$$
+Cov(Y_t, Y_{t-k}) = 
+\begin{cases} 
+k_{odd} \land t_{odd} \ \quad & Cov(X_t, X_{t-k} + 3) = \gamma_k \\
+k_{even} \lor t_{even} \quad &  Cov(X_t + 3, X_{t-k} + 3)= Cov(X_t, X_{t-k}) = \gamma_k
+\end{cases}
+$$
+
+$X_t$ and $Y_t$ has the same auto cov func.
+
+b) $Y_t$ shows seasonality, the mean would be $\frac{\mu_X + \mu_X + 3}{2}$. not dependent on t since X was stationary. then Y is also stationary. 
+
+## Ex 2.7
+
+##### a)
+
+$$
+E(W_t) = E(Y_t - Y_{t-1}) = 0  \\
+Cov(W_t, W_{t-k}) = 
+\begin{cases}
+k = 0 & \quad Cov(Y_t - Y_{t-1}, Y_t - Y_{t-1}) = 2\gamma_0 - 2\gamma_1 \\
+k = \pm 1 & \quad Cov(Y_t - Y_{t-1}, Y_{t-1} - Y_{t-2}) = \gamma_1 - \gamma_2 - \gamma_0 + \gamma_1 = 2\gamma_1 - \gamma_0 - \gamma_2 \\
+|k| > 1 & \quad Cov(Y_t - Y_{t-1}, Y_{t-k} - Y_{t-1-k}) = \gamma_k -\gamma_{k+1} -\gamma_{k-1} + \gamma_k 
+\end{cases}
+$$
+
+for $W_t$ , $\gamma_k$ is independent of t. hence stationary.
+
+##### b)
+We showed that $\Delta Y_t$ if $\{ Y_t \}$ is stationary is stationary
+Now, $\{ W_t \}  $ is stationary then $U_t = \Delta W_t$ is also stationary  
+
+## Ex 2.8
+
+the linear combination of a stationary process is stationary.
+
+## Ex 2.13
+
+$$
+Var(e_t - \theta (e_{t-1})^2) = Var(e_t) + \theta^2Var(e_{t-1}^2 ) \xrightarrow{e^2 \sim \sigma^2 \chi^2_{(1)}} = \sigma_e + 2\sigma^4_e\theta^2
+$$
+
+$$
+\gamma_k =  
+\begin{cases}
+Cov(e_t, e_{t-k}) - \theta Cov(e^2_{t-1},e_{t-k}) - \theta Cov(e_t, e^2_{t-1-k}) + \theta^2 Cov(e^2_{t-1}, e^2_{t-1-k}) =\sigma_e+2\theta^2\sigma^4_e \quad & k = 0 \\
+Cov(e_t, e_{t-1}) - \theta Cov(e^2_{t-1},e_{t-1}) - \theta Cov(e_t, e^2_{t-2}) + \theta^2 Cov(e^2_{t-1}, e^2_{t-2}) \\
+= 0 + E[e^3_{t-1}] - E[e_{t-1}]E[e^2_{t-1}] + 0 + 0 \xrightarrow{e_t \sim N(0,\sigma^2_e)} \text{all odd moments are zero} = E[e^3_{t-1}] = 0 \quad & k = 1 \\
+Cov(e_t, e_{t-2}) - \theta Cov(e^2_{t-1},e_{t-2}) - \theta Cov(e_t, e^2_{t-3}) + \theta^2 Cov(e^2_{t-1}, e^2_{t-3}) = 0 \quad & k > 1
+\end{cases} \\
+\frac{Cov(e_t - \theta (e_{t-1})^2 , e_{t-k} - \theta (e_{t-1-k})^2)}{\sqrt{Var(e_t - \theta (e_{t-1})^2)Var(e_{t-k} - \theta (e_{t-1-k})^2))}} 
+= \frac{\gamma_k}{\sigma_e+2\theta^2\sigma^4_e} = \rho_k = 
+\begin{cases}
+1 \quad & k=0 \\
+0 \quad & |k| > 0
+\end{cases}
+$$
+$$
+E[Y_t] = 0 - \theta E[e^2_{t-1}] = -\theta E[\sigma^2 \frac{e^2_{t-1}}{\sigma^2}] = - \theta\sigma^2 \Rightarrow \text{independent of t}
+$$
+Yes. $Y_t$ is stationary. 
+
+### Ex 2.17
+
+ a) 
+ $$
+ Var(\bar{Y}) = \frac{1}{n^2}\sum^n_i \sum^n_j Cov(Y_i, Y_j) = \frac{1}{n^2} \left( nVar(Y) + \sum^n_{i} \sum_{j<i} 2Cov(Y_i, Y_j)\right) \\
+ = \frac{1}{n^2} \left( nVar(Y) + \sum^n_{i} \sum^{i-k = i-1}_{j = i-k =1} 2Cov(Y_i, Y_{i-k})\right)\\
+ \rightarrow \quad \frac{\gamma_0}{n} + \frac{2}{n^2}\sum_i^n\sum^{i-1}_{k=1} \gamma_k
+ $$
+$\gamma_k$ does not depend on i so
+$$
+\frac{\gamma_0}{n} + \frac{2}{n^2} \left( \sum_k^0 \gamma_k + \sum_k^1 \gamma_k + \sum_k^2 \gamma_k + \dots\ + \sum_k^{n-1} \gamma_k \right) \\ 
+= \frac{\gamma_0}{n} + \frac{2}{n^2} \left( (n-1)\gamma_1 + (n-2)\gamma_2 + \dots\ + (n-(n -1))\gamma_{n-1} \right) \\
+= \frac{\gamma_0}{n} + \frac{2}{n^2} \left( \sum_k^{n-1} (n - k)\gamma_k \right) = \frac{\gamma_0}{n} + \frac{2}{n} \left( \sum_k^{n-1} (1 - \frac{k}{n})\gamma_k \right)  
+$$

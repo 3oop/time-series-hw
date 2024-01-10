@@ -1,0 +1,61 @@
+\documentclass[a5paper,10pt]{report}
+
+\usepackage{amsmath}
+\usepackage{mathtools, cancel}
+
+\usepackage{xepersian}
+\usepackage{fontspec}
+\settextfont{B Mitra}
+\setlatintextfont[Scale=1]{TeX Gyre Termes}
+\usepackage{fullpage}
+\usepackage{setspace}
+\doublespacing
+
+\author{پوریا عصاره ها}
+\title{
+    تمرین کلاسی ۱۶ آبان\\
+    سری زمانی ۱ \\
+    دکتر افتخاری
+}
+\date{\today}
+\begin{document}
+\maketitle
+
+\begin{align*}
+    W_t = & \nabla^2 Y_t \\
+        = & \nabla Y_t - \nabla Y_{t-1} \\
+        = & Y_t - Y_{t-1} - (Y_{t-1} - Y_{t-2}) \\ 
+        = & Y_t -2Y_{t-1} + Y_{t-2} \\
+        = & M_t + e_t - 2M_{t-1} -2e_{t-1} + M_{t-2} + e_{t-2} \\
+        = & M_{t-1} + W_t + e_t - 2M_{t-1} -2e_{t-1} + M_{t-2} + e_{t-2} \\
+        = & W_t + e_t - M_{t-2} - W_{t-1} -2e_{t-1} + M_{t-2} + e_{t-2} \\
+        = & W_{t-1} + \epsilon_t + e_t - W_{t-1} -2e_{t-1} + e_{t-2} \\ 
+        = & \epsilon_t + e_t -2e_{t-1} + e_{t-2} \\ 
+\end{align*}
+
+\begin{align*}
+    Var(W_t) = & Var(\epsilon_t + e_t -2e_{t-1} + e_{t-2}) \\
+            = & Var(\epsilon_t) + Var(e_t) +4Var(e_{t-1}) + Var(e_{t-2}) \\
+            = & \sigma^2_\epsilon + 6\sigma^2_e
+\end{align*}
+
+\begin{align*}
+    Cov(W_t , W_{t-k}) = & Cov(\epsilon_t + e_t -2e_{t-1} + e_{t-2}, \epsilon_{t-k} + e_{t-k} -2e_{t-k-1} + e_{t-k-2}) \\
+    = & Cov(\epsilon_t, \epsilon_{t-k} + e_{t-k} -2e_{t-k-1} + e_{t-k-2}) \\
+    + & Cov(e_t, e_{t-k} -2e_{t-k-1} + e_{t-k-2}) \\
+    - & 2Cov(e_{t-1}, e_{t-k} -2e_{t-k-1} + e_{t-k-2}) \\
+    + & Cov(e_{t-2}, e_{t-k} -2e_{t-k-1} + e_{t-k-2}) \\
+\end{align*}
+\begin{align}
+    \gamma_0 = & \sigma^2_\epsilon + \sigma^2_e + 4\sigma^2_e + \sigma_e^2 = \sigma^2_\epsilon + 6\sigma^2_e \\
+    \gamma_1 = & -2\sigma_e^2 - 2\sigma_e^2  = -4\sigma_e^2\\
+    \gamma_2 = & \sigma_e^2 \\
+    \gamma_{k>3} = & 0
+\end{align}
+\begin{align}
+    \rho_0 = 1 \\
+    \rho_1 = & \frac{-4\sigma_e^2}{\sigma^2_\epsilon + 6\sigma^2_e} \\
+    \rho_2 = & \frac{\sigma_e^2}{\sigma^2_\epsilon + 6\sigma^2_e} \\
+    \rho_{k>3} = & 0
+\end{align}
+\end{document}

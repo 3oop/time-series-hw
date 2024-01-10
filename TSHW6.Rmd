@@ -1,0 +1,83 @@
+---
+title: "Time Series Chapter 6 HW6"
+author: "Pooria Assarehha"
+date: "2023-12-27"
+output: pdf_document
+---
+
+## Ex 6.13
+
+if we assume the $$\hat{\phi}_{kk} < \frac{2}{\sqrt{n}} \quad \forall k > 4  $$ and since $$\hat{\phi}_{33} < \frac{2}{\sqrt{121}} \quad (0.08 < 0.181)$$ we suggest AR(2)
+
+## Ex 6.15
+acf for Difference series seem to cut off, then one difference is setting it close to a MA. accepting values greater than $\frac{2}{\sqrt{n}} = 0.2$ we suggest MA(1) for $\nabla Y_t$ then ARIMA(0,1,1) for $Y_t$.
+## Ex 6.16
+
+$\frac{2}{\sqrt{8}} = 0.25$ then AR(2)
+
+## Ex 6.22
+
+rejection bound for $n=48$ is 
+```{r}
+2/sqrt(48)
+```
+theoretical $\rho_5$ for AR(1) $\phi^5$
+(a)
+```{r}
+set.seed(5342310)
+ar1=arima.sim(n=48,list(ar=0.9))
+0.9^5
+acfs = acf(ar1, plot=FALSE)
+acfs
+bound = sqrt((1+0.9^2)/(48*(1-0.9^2)))
+bound
+acfs[[1]][5] < bound
+```
+for AR(1)
+$$ Var(r_1) \approx \frac{1-\phi^2}{n} \quad , \quad Var(r_k) \approx \frac{1}{n}\frac{1+\phi^2}{1-\phi^2} \quad \forall k > 1  $$
+
+(b)
+```{r}
+set.seed(5342310)
+ar1=arima.sim(n=48,list(ar=0.6))
+0.6^5
+acfs = acf(ar1, plot=FALSE)
+acfs
+bound = sqrt((1+0.6^2)/(48*(1-0.6^2)))
+bound
+acfs[[1]][5] < bound
+```
+(c)
+```{r}
+set.seed(5342310)
+ar1=arima.sim(n=48,list(ar=0.3))
+0.3^5
+acfs = acf(ar1, plot=FALSE)
+acfs
+bound = sqrt((1+0.3^2)/(48*(1-0.3^2)))
+bound
+acfs[[1]][5] < bound
+```
+
+
+## Ex 6.36
+(a)
+```{r}
+library(TSA)
+data(robot)
+plot(robot)
+```
+
+(b)
+```{r, fig.height=7, fig.width=9}
+par(mfrow=c(2,1))
+acf(robot)
+pacf(robot)
+```
+(c)
+```{r}
+eacf(robot)
+```
+
+(d)
+
