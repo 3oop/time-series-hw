@@ -7,6 +7,29 @@ output: pdf_document
 
 ## Ex 7.1
 
+-- $n = 100$
+-- $r_1 = 0.8$
+-- $r_2 = 0.5$
+-- $r_3 = 0.4$
+-- $\bar{Y} = 2$
+-- $s^2 = 5$
+-- $Y_t \sim AR(2) + \mu$
+
+-- $\hat{\phi}_1, \hat{\phi}_2, \hat{\theta}_0, \hat{\sigma}^2_e = ?$
+
+$\hat{\theta}_0 = \bar{Y} = 2$
+
+Using Yule-Walker Estimations:
+
+$$
+\begin{cases}
+r_1 = \phi_1 + r_2\phi_2 \\
+r_2 = r_1\phi_1 + \phi_2 
+\end{cases} \quad \Rightarrow \quad \hat{\phi}_1 = \frac{r_1(1-r_2)}{1-r_2^2}  = 0.5\bar{3}  \quad , \quad \hat{\phi}_2 = \frac{r_2-r_1^2}{1-r_1^2} \approx -0.39 
+$$
+
+$$ \hat{\sigma}_e^2 = \left(1 - \hat{\phi}_1r_1 - r_2\hat{\phi}_2\right)s^2 = 3.838$$
+
 ## Ex 7.3
 
 ## Ex 7.4
