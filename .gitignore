@@ -49,6 +49,8 @@ po/*~
 rsconnect/
 
 # LaTeX
+*.fdb_latexmk
+*.fls
 *.aux
 *.log
 *.pdf
