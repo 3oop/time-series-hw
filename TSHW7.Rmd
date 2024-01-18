@@ -13,7 +13,7 @@ output: pdf_document
 -- $r_3 = 0.4$
 -- $\bar{Y} = 2$
 -- $s^2 = 5$
--- $Y_t \sim AR(2) + \mu$
+-- $Y_t \sim$ AR(2) + $\mu$
 
 -- $\hat{\phi}_1, \hat{\phi}_2, \hat{\theta}_0, \hat{\sigma}^2_e = ?$
 
@@ -28,12 +28,57 @@ r_2 = r_1\phi_1 + \phi_2
 \end{cases} \quad \Rightarrow \quad \hat{\phi}_1 = \frac{r_1(1-r_2)}{1-r_2^2}  = 0.5\bar{3}  \quad , \quad \hat{\phi}_2 = \frac{r_2-r_1^2}{1-r_1^2} \approx -0.39 
 $$
 
-$$ \hat{\sigma}_e^2 = \left(1 - \hat{\phi}_1r_1 - r_2\hat{\phi}_2\right)s^2 = 3.838$$
+$$\hat{\sigma}_e^2 = \left(1 - \hat{\phi}_1r_1 - r_2\hat{\phi}_2\right)s^2 = 3.838$$
 
 ## Ex 7.3
+-- $Y_t \sim$ AR(1)
+-- $\phi \approx 0.7$
+-- $Z_{0.975} \hat{Var}(\phi) \leq  0.1 \Rightarrow  n=?$
+
+$$
+AR(1) \Rightarrow \hat{\phi} = r \Rightarrow Var(r_1) = \frac{1-\phi_1^2}{n} \quad \Rightarrow 1.96\times \frac{1-0.7^2}{n} \leq 0.1  \Rightarrow n \geq \lceil 19.6 \times 0.51\rceil \Rightarrow n\geq 10
+$$
 
 ## Ex 7.4
 
+-- $Y_t \sim$ MA(1)
+-- $\mu = 0$
+-- $n=3$
+-- $Y_1 = 0$
+-- $Y_2 = -1$
+-- $Y_3 = \frac{1}{2}$
+-- (a) Cond-LS $\hat{\theta} = \frac{1}{2}$
+-- (b) $\hat{\sigma}^2_e = ?$
+
+$$e_t = Y_t + \theta e_{t-1} \begin{cases} e_1 = Y_1 + 0 \\ e_2 = Y_2 + \theta e_1 \\ e_3 = Y_3 + \theta e_2 \end{cases}$$
+
 ## Ex 7.6
 
+Model I: $Y_t - \mu = \phi(Y_{t-1}-\mu) + e_t$
+Model II: $Y_t = \phi Y_{t-1}+ \theta_0 + e_t $
+
+
+
 ## Ex 7.10
+
+for a simulated MA(1) with $\theta = -0.6$
+-- Method of Moments: $\hat{\theta} = ?$
+-- Con LS of the prior and compare? 
+-- MLE of the prior and compare?
+
+we have to negate $\theta$ due to difference in MA definition 
+
+```{r}
+library(TSA)
+yt = arima.sim(list(ma=c(0.6)), n=36)
+plot(yt)
+```
+
+
+
+```{r}
+r = acf(yt, ci.type='ma', plot = FALSE)
+rho = ARMAacf(ma = c(0.6))
+```
+
+
