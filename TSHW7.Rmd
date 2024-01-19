@@ -57,7 +57,7 @@ $$e_t = Y_t + \theta e_{t-1} \begin{cases} e_1 = Y_1 + 0 \\ e_2 = Y_2 + \theta e
 Model I: $Y_t - \mu = \phi(Y_{t-1}-\mu) + e_t$
 Model II: $Y_t = \phi Y_{t-1}+ \theta_0 + e_t $
 
-
+$$S_c(\phi, \mu) = \sum_{t=2}^n (Y_t - \mu - \phi(Y_{t-1} - \mu))^2 = $$
 
 ## Ex 7.10
 
@@ -81,4 +81,28 @@ r = acf(yt, ci.type='ma', plot = FALSE)
 rho = ARMAacf(ma = c(0.6))
 ```
 
+For MA(1) we have the Moments Estimate:
+
+$$\hat{\theta} = \frac{-1 \pm \sqrt{1- 4r_1^2}}{2r_1}$$
+```{r}
+r1 = r[[1]][1]
+(-1 + c(1,-1)*sqrt(1-4*r1^2))/(2*r1)
+```
+
+for invertibility we choose $\hat{\theta} = -0.31$, which is very far from reality. 
+
+we know MM Estimates are not good for MA series, The Cond LS Estimate cannot be obtained by hand.
+
+```{r}
+arima(yt, order = c(0,0,1), method = "CSS")
+```
+
+gives us $\hat{\theta} = 0.5833$ which is much more acceptable.
+
+
+```{r}
+arima(yt, order = c(0,0,1), method = "ML")
+```
+
+gives us $\hat{\theta} = 0.5660$ which is much more acceptable.
 
