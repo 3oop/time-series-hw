@@ -81,7 +81,7 @@ $$\frac{\partial S_c}{\partial \theta} = 2\theta - 1 = 0 \Rightarrow \hat{\theta
 
 $$\hat{\sigma}^2_e = \frac{\sum_{t=1}^n e_t^2}{n-1} = \frac{1}{3-1} = \frac{1}{2}$$
 
-Note: Since the mean is known to be zero, one might reasonably argue that the divisor should be n rather than n−1.
+Note: Since the mean is known to be zero, one might reasonably argue that the divisor should be n rather than n-1.
 
 ## Ex 7.6
 
@@ -107,8 +107,10 @@ for a simulated MA(1) with $\theta = -0.6$
 
 we have to negate $\theta$ due to difference in MA definition 
 
-```{r}
+```{r, message=FALSE}
+rm(list=ls())
 library(TSA)
+set.seed(135246) # to match the solution results
 yt = arima.sim(list(ma=c(0.6)), n=36)
 plot(yt)
 ```
@@ -126,9 +128,10 @@ $$\hat{\theta} = \frac{-1 \pm \sqrt{1- 4r_1^2}}{2r_1}$$
 ```{r}
 r1 = r[[1]][1]
 (-1 + c(1,-1)*sqrt(1-4*r1^2))/(2*r1)
+#estimate.ma1.mom(yt)
 ```
 
-for invertibility we choose $\hat{\theta} = -0.31$, which is very far from reality. 
+for invertibility we choose $\hat{\theta} = -0.75$, which is very far from reality. 
 
 we know MM Estimates are not good for MA series, The Cond LS Estimate cannot be obtained by hand.
 
@@ -136,12 +139,61 @@ we know MM Estimates are not good for MA series, The Cond LS Estimate cannot be 
 arima(yt, order = c(0,0,1), method = "CSS")
 ```
 
-gives us $\hat{\theta} = 0.5833$ which is much more acceptable.
+gives us $\hat{\theta} = 0.9227$ which is much worse!
 
 
 ```{r}
 arima(yt, order = c(0,0,1), method = "ML")
 ```
 
-gives us $\hat{\theta} = 0.5660$ which is much more acceptable.
+The maximum likelihood estimate is quite similar to the CSS estimate and, again, the MOM estimate is better in
+this case.
+
+### Another Round
+
+```{r}
+rm(list=ls())
+set.seed(123456)
+yt = arima.sim(list(ma=c(0.6)), n=36)
+r = acf(yt, ci.type='ma', plot = FALSE)
+rho = ARMAacf(ma = c(0.6))
+plot(yt)
+```
+
+```{r}
+r1 = r[[1]][1]
+r1 
+```
+
+$|r_1| > 0.5$ then no Method of Moments estimation exists for this simulation.
+
+```{r}
+arima(yt, order = c(0,0,1), method = "CSS")
+arima(yt, order = c(0,0,1), method = "ML")
+```
+
+Both estimates seem terrible. Why?
+
+### Another Round
+
+```{r}
+rm(list=ls())
+set.seed(1)
+yt = arima.sim(list(ma=c(0.6)), n=36)
+r = acf(yt, ci.type='ma', plot = FALSE)
+rho = ARMAacf(ma = c(0.6))
+plot(yt)
+```
+
+```{r}
+r1 = r[[1]][1]
+(-1 + c(1,-1)*sqrt(1-4*r1^2))/(2*r1)
+```
+
+```{r}
+arima(yt, order = c(0,0,1), method = "CSS")
+arima(yt, order = c(0,0,1), method = "ML")
+```
+
+Both estimates are way better than the MoM. 
 
