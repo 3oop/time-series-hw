@@ -1,0 +1,20 @@
+---
+title: "Time Series Chapter 9 HW"
+author: "Pooria Assarehha"
+date: "2024-01-20"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Ex 9.1
+
+## Ex 9.2
+
+## Ex 9.4
+
+## Ex 9.6
+
+## Ex 9.13

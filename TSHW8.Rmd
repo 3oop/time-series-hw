@@ -1,0 +1,14 @@
+---
+title: "Time Series Chapter 8 HW"
+author: "Pooria Assarehha"
+date: "2024-01-20"
+output: pdf_document
+---
+
+## Ex 8.1
+
+## Ex 8.2
+
+## Ex 8.4
+
+## Ex 8.8
