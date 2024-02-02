@@ -47,25 +47,42 @@ $$ 57.7 \pm 1.96 \times 3.719 \Rightarrow \left(50.3 \ , \ 65.1\right) $$
 
 ## Ex 9.6
 
+#### a
+
+Intercept + April = 16.608 + 29.917 = 46.525
+
+#### b
+
+Average Forcast $\pm 1.96 \times \sqrt{\gamma_0}$
+
+```{r}
+46.525 + c(-1,1)*1.96*3.419
+```
+
+#### c 
+
+
+
 ## Ex 9.13
 
 ```{r}
+library(TSA)
 yt = arima.sim(n=50,list(ar=0.7,ma=0.5)) + 100
 actual=window(yt,start=41); yt=window(yt,end=40)
 ```
 
 ```{r}
-model=arima(yt,order=c(1,0,1), method = "ML")
+model=arima(yt,order=c(1,0,1))
 model
 ```
 
 ```{r}
-#result = plot(model,n.ahead=10,ylab='Series & Forecasts',col=NULL,pch=19)
-#abline(h=coef(model)[names(coef(model))=='intercept'])
+result = plot(model,n.ahead=10,ylab='Series & Forecasts',col=NULL,pch=19)
+abline(h=coef(model)[names(coef(model))=='intercept'])
 ```
 
 ```{r}
-#forecast=result$pred; cbind(actual,forecast)
+forecast=result$pred; cbind(actual,forecast)
 ```
 
 ```{r}
