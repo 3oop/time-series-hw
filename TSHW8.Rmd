@@ -7,8 +7,53 @@ output: pdf_document
 
 ## Ex 8.1
 
+$$Var(\hat{r}_k) = \frac{\phi^2}{n} \Rightarrow 0 \notin (0.5 - 1.96\times \sqrt{\frac{0.5^2}{100}}) = (0.5 \pm 0.1)$$
+we must reject $\hat{r}_1 = 0$ meaning the residuals of the model are correlated. 
+
+we want the residuals to be small and as independent as they can be.
+
 ## Ex 8.2
+
+This is the same as 8.1 because for an MA(1) model $Var(\hat{r}_k) = \frac{\theta^2}{n}$
 
 ## Ex 8.4
 
+```{r, message=FALSE}
+library(TSA)
+yt = arima.sim(list(ar=0.5), n = 30)
+ar1 = arima(yt, order=c(1,0,0))
+stdres = rstandard(ar1)
+plot(stdres)
+abline(h=0)
+```
+No info can be gained regarding normality. non normality cannot be rejected.
+
+```{r}
+qqnorm(stdres)
+qqline(stdres)
+```
+
+We can Reject normality.
+
+```{r}
+acf(stdres)
+```
+
+```{r}
+LB.test(ar1, lag=8)
+```
+
 ## Ex 8.8
+
+```{r}
+data(oilfilters)
+oil =arima(oilfilters,order=c(1,0,0))
+oil
+```
+Yes it is. 
+
+```{r}
+acf(as.numeric(rstandard(oil)))
+```
+
+lag 12 has significant autocorrelation. this model did not consider seasonality.

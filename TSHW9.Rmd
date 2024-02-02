@@ -5,16 +5,86 @@ date: "2024-01-20"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## Ex 9.1
+
+$$
+\hat{Y}_t (1) = \mu + \phi(Y_t - \mu) = 10.8 -0.5(12.2 - 10.8) = 10.1
+$$
+
+$$\hat{Y}_t(2) =  \mu + \phi(\hat{Y}_t(1) - \mu) = 10.8 -0.5(10.1 - 10.8) = 11.15$$
+$$\hat{Y}_t(2) = \mu + \phi^2(Y_t - \mu) = 10.8 + (-0.5)^2(12.2 - 10.8) = 11.15$$
+
+$$\hat{Y}_t (10) = \mu + \phi^{10}(Y_t - \mu) = 10.8 + (-\frac{1}{2})^{10}(1.4)   \approx 10.7986 $$
 
 ## Ex 9.2
 
+$$\hat{Y}_t (1) = \theta_0 +  \phi_1Y_t + \phi_2Y_{t-1} $$
+$$
+\Rightarrow \hat{Y}_t (1) = 5 + 1.1\times 10 -0.5\times 11 = 10.5 = \hat{Y}_{2008}
+$$
+$$\hat{Y}_{2009} = 5 + 1.1\times 10.5 - 0.5 \times 10 = 11.55$$
+#### (b)
+$\psi_0$ is 1 for an ARMA model, $\psi_1$ the coefficient of $e_{t-1}$ can only be $\phi_1$
+
+#### (c)
+
+$$Var(e_t (l)) = \sigma^2_e \sum_{j=0}^{l-1} \psi^2_j \Rightarrow Var(\hat{Y}_{2007}(1))= \sigma^2_e \Rightarrow 10.5 \pm 1.96\times \sqrt{2}$$
+#### d
+
+$$\hat{Y}_{t+1}(l) = \hat{Y}_{t}(l+1) + \psi_l\left(Y_{t+1} - \hat{Y}_{t}(l) \right) \Rightarrow \hat{Y}_{2008}(1) = \hat{Y}_{2007}(2) + \psi_1 \left(Y_{2008} - \hat{Y}_{2007}(l)\right)  $$
+
+$$11.55 + 1.1(12- 10.5) = 13.2$$
+
 ## Ex 9.4
+
+#### a 
+
+$$ t = 12 + (4/12) \Rightarrow \hat{\mu}_t = 46.2660 + (-26.7079)\cos\left(2\pi \left(12 + \frac{4}{12}\right)\right) + (-2.1697)\sin\left(2\pi \left(12 + \frac{4}{12}\right)\right) = 57.7$$
+
+#### b
+
+$$ 57.7 \pm 1.96 \times 3.719 \Rightarrow \left(50.3 \ , \ 65.1\right) $$
 
 ## Ex 9.6
 
 ## Ex 9.13
+
+```{r}
+yt = arima.sim(n=50,list(ar=0.7,ma=0.5)) + 100
+actual=window(yt,start=41); yt=window(yt,end=40)
+```
+
+```{r}
+model=arima(yt,order=c(1,0,1), method = "ML")
+model
+```
+
+```{r}
+#result = plot(model,n.ahead=10,ylab='Series & Forecasts',col=NULL,pch=19)
+#abline(h=coef(model)[names(coef(model))=='intercept'])
+```
+
+```{r}
+#forecast=result$pred; cbind(actual,forecast)
+```
+
+```{r}
+plot(model,n.ahead=10,ylab='Series, Forecasts, Actuals & Limits',pch=19)
+points(x=(41:50),y=actual,pch=3)
+abline(h=coef(model)[names(coef(model))=='intercept'])
+```
+
+#### e
+
+```{r}
+yt2 = arima.sim(n=50,list(ar=0.7,ma=0.5)) + 100
+actual2=window(yt2,start=41); yt2=window(yt2,end=40)
+model2=arima(yt2,order=c(1,0,1), method = "ML")
+result2=plot(model2,n.ahead=10,ylab='Series & Forecasts',col=NULL,pch=19)
+abline(h=coef(model2)[names(coef(model2))=='intercept'])
+forecast2=result2$pred; cbind(yt2[41:50],forecast2)
+plot(model2,n.ahead=10,ylab='Series, Forecasts, Actuals & Limits',pch=19)
+points(x=(41:50),y=yt2[41:50],pch=3)
+abline(h=coef(model2)[names(coef(model2))=='intercept'])
+```
+
