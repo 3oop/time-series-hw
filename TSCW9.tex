@@ -23,4 +23,10 @@
 
 \section*{برای \lr{ARMA(2,2)} پیشبینی و خطای آن}
 
+\[ \hat{Y}_t(l) = \hat{\mu} + \phi_1 \left(\hat{Y}_t(l-1) - \mu\right)  + \phi_2  \left(\hat{Y}_t(l-2) - \mu \right) - \theta_1 E[e_{t+l-1} | \bf Y ] - \theta_2 E[e_{t+l-2} | \bf Y ] \]
+
+\[ begin{cases} 0 & j>0 \\ e_{t+j} & j \le 0  \end{cases} \]
+
+\[ \Rightarrow Var(e_t(l)) = \sigma^2 \sum_i^{l-1} \psi_j^2 \begin{cases} \psi_0 = 1 \\ \psi_1 = \phi_1 - \theta_1 \\
+\psi_2 = \phi_2 - \theta_2 \end{cases} \]
 \end{document}
